@@ -1,0 +1,226 @@
+<% layout('/layouts/boilerplate') -%>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="/js/swiper-bundle.min.js"></script>
+
+           
+
+<style>
+    #filters{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    
+    }
+    .mySwiper{
+      width: 70%;
+  
+    }
+    .filter{
+      text-align: center;
+      margin-right:.5rem ;
+      margin-top: 2rem;
+      opacity: 0.7;
+      margin-bottom: 2rem;
+    }
+    .filter:hover{
+      opacity: 1;
+      cursor: pointer;
+    }
+    .filter p{
+      font-size: 0.8rem;
+    }
+    .tax-info{
+      display: none;
+    }
+    .toggle{
+      border: .3px solid black;
+      border-radius: 1rem ;
+      height: 2.5rem;
+      padding: 0.7rem;
+      margin-left: 10rem;
+      display: flex;
+      align-items: center;
+      opacity: .7;
+      justify-content: center;
+    
+    }
+ 
+         /* Media Queries for Mobile View */
+    @media (max-width: 768px) {
+        .mySwiper {
+            width: 100%;
+        }
+        .swiper-slide {
+            width: auto;
+        }
+        .toggle {
+          display: none;
+        }
+        .swiper-button-next{
+          display: none;
+        }
+    }
+  
+    
+    
+  </style>
+
+
+
+
+        <div id="filters">
+          <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><div class="filter">
+                <i class="fa-solid fa-bed"></i>
+                <p>Rooms</p>
+              </div>
+            </div>
+             
+              <div class="swiper-slide">
+                <div class="filter">
+                  <i class="fa-solid fa-city"></i>
+                  <p>Iconic City</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="filter">
+                  <i class="fa-solid fa-mountain-city"></i>
+                  <p>Mountains</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="filter">
+                  <i class="fa-brands fa-fort-awesome"></i>
+                  <p>Castels</p>
+                </div>
+                
+              </div>
+              <div class="swiper-slide">
+                <div class="filter">
+                  <i class="fa-solid fa-person-swimming"></i>
+                  <p>Pools</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="filter">
+                  <i class="fa-solid fa-tents"></i>
+                  <p>Camping</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="filter">
+                  <i class="fa-solid fa-wheat-awn"></i>
+                  <p>Farm House</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="filter">
+                  <i class="fa-regular fa-snowflake"></i>
+                  <p>Arctic</p>
+                </div>
+              </div>
+              <div class="swiper-slide"><div class="filter">
+                <i class="fa-solid fa-water"></i>
+                <p>Lake</p>
+              </div>
+            </div>
+              <div class="swiper-slide">  <div class="filter">
+                <i class="fa-solid fa-igloo"></i>
+                <p>Doms</p>
+              </div>
+            </div>
+            </div>
+            
+            <div class="swiper-pagination"></div>
+             
+          </div>
+
+
+          <div class="toggle">
+            <div class="form-check-reverse form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+              <label class="form-check-label" for="flexSwitchCheckDefault">total after taxes</label>
+            </div>
+           </div> 
+            
+          </div>
+
+
+
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+
+        <% for(let listing of allListing ){ %>
+            <a href="/listings/<%= listing._id %>" class="listing-link">
+                <div class="card col listing-card">
+                    <img src=" <%=listing.image.url %>" class="card-img-top" alt="Hotels image"
+                        style="width: 20rem;height:20rem;">
+                    <div class="card-img-overlay">
+                        <i class="fa-regular fa-heart"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <b>
+                                <%= listing.title %>
+                            </b> <br>
+                            &#8377;<%= listing.price.toLocaleString("en-IN") %> / night
+                                <b class="tax-info">&nbsp; + <%= (listing.price)*.18 %></b>
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <% } %>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+        taxSwitch.addEventListener("click", () => {
+            let taxinfo = document.getElementsByClassName("tax-info");
+            for (info of taxinfo) {
+                if (info.style.display != "inline") {
+                    info.style.display = "inline";
+                    
+                } else {
+                    info.style.display = "none";
+                }
+
+            }
+        })
+
+    </script>
+
+<script>
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 5,
+    spaceBetween: 30,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      breakpoints: {
+        400: {
+          slidesPerView: 4,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+        },
+        1024: {
+          slidesPerView: 5,
+          spaceBetween: 50,
+        },
+      },
+  });
+</script>
+  
